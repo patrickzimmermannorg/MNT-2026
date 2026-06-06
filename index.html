@@ -454,7 +454,7 @@ body {
 .toast.error   { background: var(--full); }
 
 /* ── CONFIG BANNER ────────────────────────────────────────── */
-.config-banner { display: none !important;
+.config-banner { display: none !important; 
   background: #fef3c7;
   border: 2px dashed #f59e0b;
   border-radius: 10px;
@@ -520,6 +520,7 @@ body {
 
 <!-- ══ MAIN ════════════════════════════════════════════════ -->
 <main class="main">
+
   <div id="dashboard"></div>
 
 </main>
@@ -613,32 +614,38 @@ const isConfigured = () => SCRIPT_URL !== 'https://script.google.com/macros/s/AK
 async function loadData() {
   if (!isConfigured()) { renderDashboard(); updateStats(); return; }
   try {
-    const res = await fetch(SCRIPT_URL + '?action=getAll', { mode:'cors' });
+    const res = await fetch(SCRIPT_URL + '?action=getAll', {
+      method: 'GET',
+      redirect: 'follow'
+    });
     const data = await res.json();
     state = data;
-    renderDashboard();
-    updateStats();
   } catch(e) {
-    console.warn('Offline-Modus:', e);
-    renderDashboard();
-    updateStats();
+    console.warn('Ladefehler:', e);
   }
+  renderDashboard();
+  updateStats();
 }
 
 async function submitAnmeldung(dienstId, name, email, tel) {
   if (!isConfigured()) {
-    // Demo-Modus: lokal speichern
     if (!state[dienstId]) state[dienstId] = [];
     state[dienstId].push({ name, email, tel });
     myBookings.push(dienstId);
     localStorage.setItem('mt26_bookings', JSON.stringify(myBookings));
     return { success: true };
   }
-  const res = await fetch(SCRIPT_URL, {
-    method: 'POST',
-    mode: 'cors',
-    headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify({ action:'anmelden', dienstId, name, email, tel })
+  // GET-Request mit URL-Parametern (umgeht CORS-Probleme)
+  const params = new URLSearchParams({
+    action:   'anmelden',
+    dienstId: dienstId,
+    name:     name,
+    email:    email,
+    tel:      tel
+  });
+  const res = await fetch(SCRIPT_URL + '?' + params.toString(), {
+    method:   'GET',
+    redirect: 'follow'
   });
   const data = await res.json();
   if (data.success) {
@@ -663,7 +670,7 @@ function getCardState(dienst) {
 function renderDashboard() {
   const dash = document.getElementById('dashboard');
   const banner = document.getElementById('config-banner');
-  
+  if (isConfigured()) banner.style.display = 'none';
 
   let html = '';
   TAGE.forEach(tag => {
