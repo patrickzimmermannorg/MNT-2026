@@ -1,0 +1,816 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Helferliste – Mitternachtsturnier 2026</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@400;600;700;800&family=Barlow:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+/* ── RESET & VARS ─────────────────────────────────────────── */
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+:root {
+  --navy:   #1a3a5c;
+  --navy2:  #0f2440;
+  --green:  #2d6a35;
+  --orange: #b45309;
+  --free:   #16a34a;
+  --warn:   #ca8a04;
+  --full:   #dc2626;
+  --bg:     #f0f4f8;
+  --card:   #ffffff;
+  --text:   #1e293b;
+  --muted:  #64748b;
+  --border: #e2e8f0;
+  --font-display: 'Barlow Condensed', sans-serif;
+  --font-body:    'Barlow', sans-serif;
+}
+
+body {
+  font-family: var(--font-body);
+  background: var(--bg);
+  color: var(--text);
+  min-height: 100vh;
+}
+
+/* ── HEADER ───────────────────────────────────────────────── */
+.header {
+  background: linear-gradient(135deg, var(--navy2) 0%, var(--navy) 60%, #1e4d7a 100%);
+  padding: 28px 24px 24px;
+  text-align: center;
+  position: relative;
+  overflow: hidden;
+}
+.header::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: repeating-linear-gradient(
+    45deg, transparent, transparent 20px,
+    rgba(255,255,255,.03) 20px, rgba(255,255,255,.03) 40px
+  );
+}
+.header-logo {
+  font-family: var(--font-display);
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 3px;
+  color: rgba(255,255,255,.5);
+  text-transform: uppercase;
+  margin-bottom: 6px;
+}
+.header h1 {
+  font-family: var(--font-display);
+  font-size: clamp(26px, 5vw, 42px);
+  font-weight: 800;
+  color: #fff;
+  line-height: 1.05;
+  letter-spacing: .5px;
+  text-transform: uppercase;
+}
+.header h1 span { color: #7dd3fc; }
+.header-sub {
+  margin-top: 8px;
+  font-size: 13px;
+  color: rgba(255,255,255,.65);
+  font-weight: 500;
+}
+.stats-bar {
+  display: flex;
+  justify-content: center;
+  gap: 24px;
+  margin-top: 18px;
+  flex-wrap: wrap;
+}
+.stat {
+  text-align: center;
+  background: rgba(255,255,255,.1);
+  border: 1px solid rgba(255,255,255,.15);
+  border-radius: 10px;
+  padding: 10px 20px;
+  backdrop-filter: blur(4px);
+}
+.stat-num {
+  font-family: var(--font-display);
+  font-size: 28px;
+  font-weight: 800;
+  color: #fff;
+  line-height: 1;
+}
+.stat-num.green { color: #86efac; }
+.stat-num.red   { color: #fca5a5; }
+.stat-label {
+  font-size: 11px;
+  color: rgba(255,255,255,.6);
+  margin-top: 2px;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+}
+
+/* ── LEGEND ───────────────────────────────────────────────── */
+.legend {
+  display: flex;
+  justify-content: center;
+  gap: 16px;
+  padding: 14px 20px;
+  background: var(--card);
+  border-bottom: 1px solid var(--border);
+  flex-wrap: wrap;
+}
+.legend-item {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 12px;
+  color: var(--muted);
+  font-weight: 500;
+}
+.legend-dot {
+  width: 12px; height: 12px;
+  border-radius: 3px;
+  flex-shrink: 0;
+}
+.dot-free { background: var(--free); }
+.dot-warn { background: var(--warn); }
+.dot-full { background: var(--full); }
+.dot-mine { background: var(--navy); border: 2px solid #7dd3fc; }
+
+/* ── MAIN ─────────────────────────────────────────────────── */
+.main { max-width: 900px; margin: 0 auto; padding: 24px 16px 60px; }
+
+/* ── DAY SECTION ──────────────────────────────────────────── */
+.day-section { margin-bottom: 28px; }
+.day-header {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 12px;
+}
+.day-badge {
+  font-family: var(--font-display);
+  font-size: 13px;
+  font-weight: 700;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  padding: 4px 12px;
+  border-radius: 4px;
+  color: #fff;
+}
+.badge-do, .badge-fr { background: var(--navy); }
+.badge-sa { background: var(--green); }
+.badge-so { background: var(--orange); }
+
+.day-title {
+  font-family: var(--font-display);
+  font-size: 20px;
+  font-weight: 700;
+  color: var(--text);
+  letter-spacing: .3px;
+}
+.day-line {
+  flex: 1;
+  height: 1px;
+  background: var(--border);
+}
+
+/* ── DIENST GRID ──────────────────────────────────────────── */
+.dienst-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+  gap: 10px;
+}
+
+/* ── DIENST CARD ──────────────────────────────────────────── */
+.dienst-card {
+  background: var(--card);
+  border: 2px solid var(--border);
+  border-radius: 12px;
+  padding: 14px 16px;
+  cursor: pointer;
+  transition: all .18s ease;
+  position: relative;
+  overflow: hidden;
+  user-select: none;
+}
+.dienst-card::before {
+  content: '';
+  position: absolute;
+  left: 0; top: 0; bottom: 0;
+  width: 4px;
+  border-radius: 2px 0 0 2px;
+  transition: width .18s ease;
+}
+.dienst-card.free::before  { background: var(--free); }
+.dienst-card.warn::before  { background: var(--warn); }
+.dienst-card.full::before  { background: var(--full); }
+.dienst-card.mine::before  { background: var(--navy); }
+
+.dienst-card.free:hover  { border-color: var(--free); transform: translateY(-2px); box-shadow: 0 6px 20px rgba(22,163,74,.15); }
+.dienst-card.warn:hover  { border-color: var(--warn); transform: translateY(-2px); box-shadow: 0 6px 20px rgba(202,138,4,.15); }
+.dienst-card.full        { cursor: not-allowed; opacity: .75; }
+.dienst-card.mine:hover  { border-color: var(--navy); transform: translateY(-2px); }
+
+.card-top {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  margin-bottom: 8px;
+}
+.card-zeit {
+  font-family: var(--font-display);
+  font-size: 17px;
+  font-weight: 700;
+  color: var(--text);
+  line-height: 1;
+}
+.card-status-pill {
+  font-size: 10px;
+  font-weight: 700;
+  padding: 3px 9px;
+  border-radius: 20px;
+  letter-spacing: .5px;
+  text-transform: uppercase;
+}
+.pill-free { background: #dcfce7; color: var(--free); }
+.pill-warn { background: #fef9c3; color: #854d0e; }
+.pill-full { background: #fee2e2; color: var(--full); }
+.pill-mine { background: #dbeafe; color: #1d4ed8; }
+
+.card-aufgabe {
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--text);
+  margin-bottom: 4px;
+  line-height: 1.3;
+}
+.card-kategorie {
+  font-size: 11px;
+  color: var(--muted);
+  margin-bottom: 10px;
+}
+
+.card-slots {
+  display: flex;
+  gap: 5px;
+  flex-wrap: wrap;
+}
+.slot {
+  height: 28px;
+  flex: 1;
+  min-width: 60px;
+  border-radius: 6px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 10px;
+  font-weight: 600;
+  transition: all .15s;
+  border: 1px solid transparent;
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  padding: 0 4px;
+}
+.slot-free {
+  background: #f0fdf4;
+  border-color: #bbf7d0;
+  color: var(--free);
+}
+.slot-taken {
+  background: #f1f5f9;
+  border-color: var(--border);
+  color: var(--text);
+  font-size: 9px;
+}
+.slot-mine {
+  background: #dbeafe;
+  border-color: #93c5fd;
+  color: #1d4ed8;
+}
+
+.card-hint {
+  font-size: 11px;
+  color: var(--muted);
+  margin-top: 8px;
+  font-style: italic;
+}
+
+/* ── MODAL ────────────────────────────────────────────────── */
+.overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(15,36,64,.6);
+  backdrop-filter: blur(4px);
+  z-index: 100;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity .2s ease;
+}
+.overlay.open {
+  opacity: 1;
+  pointer-events: all;
+}
+.modal {
+  background: var(--card);
+  border-radius: 16px;
+  width: 100%;
+  max-width: 420px;
+  box-shadow: 0 25px 60px rgba(0,0,0,.3);
+  overflow: hidden;
+  transform: translateY(20px) scale(.97);
+  transition: transform .25s cubic-bezier(.34,1.56,.64,1);
+}
+.overlay.open .modal {
+  transform: translateY(0) scale(1);
+}
+.modal-header {
+  padding: 20px 22px 16px;
+  border-bottom: 1px solid var(--border);
+}
+.modal-tag {
+  font-family: var(--font-display);
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  color: var(--muted);
+  margin-bottom: 4px;
+}
+.modal-title {
+  font-family: var(--font-display);
+  font-size: 22px;
+  font-weight: 800;
+  color: var(--text);
+  line-height: 1.1;
+}
+.modal-zeit {
+  font-size: 13px;
+  color: var(--muted);
+  margin-top: 4px;
+}
+.modal-body { padding: 20px 22px; }
+.form-group { margin-bottom: 14px; }
+.form-label {
+  display: block;
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--text);
+  margin-bottom: 5px;
+  letter-spacing: .3px;
+}
+.form-input {
+  width: 100%;
+  padding: 10px 13px;
+  border: 1.5px solid var(--border);
+  border-radius: 8px;
+  font-size: 14px;
+  font-family: var(--font-body);
+  color: var(--text);
+  background: #f8fafc;
+  transition: border-color .15s, box-shadow .15s;
+  outline: none;
+}
+.form-input:focus {
+  border-color: var(--navy);
+  background: #fff;
+  box-shadow: 0 0 0 3px rgba(26,58,92,.1);
+}
+.modal-footer {
+  padding: 0 22px 20px;
+  display: flex;
+  gap: 10px;
+}
+.btn-cancel {
+  flex: 1;
+  padding: 11px;
+  border: 1.5px solid var(--border);
+  border-radius: 8px;
+  background: transparent;
+  font-size: 14px;
+  font-family: var(--font-body);
+  font-weight: 600;
+  color: var(--muted);
+  cursor: pointer;
+  transition: all .15s;
+}
+.btn-cancel:hover { background: #f1f5f9; color: var(--text); }
+.btn-submit {
+  flex: 2;
+  padding: 11px;
+  border: none;
+  border-radius: 8px;
+  background: var(--navy);
+  font-size: 14px;
+  font-family: var(--font-body);
+  font-weight: 700;
+  color: #fff;
+  cursor: pointer;
+  transition: all .15s;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+}
+.btn-submit:hover { background: var(--navy2); transform: translateY(-1px); }
+.btn-submit:disabled { opacity: .6; cursor: not-allowed; transform: none; }
+.btn-submit .spinner {
+  width: 14px; height: 14px;
+  border: 2px solid rgba(255,255,255,.4);
+  border-top-color: #fff;
+  border-radius: 50%;
+  animation: spin .7s linear infinite;
+  display: none;
+}
+.btn-submit.loading .spinner { display: block; }
+.btn-submit.loading .btn-text { display: none; }
+
+/* ── SUCCESS / ERROR TOAST ────────────────────────────────── */
+.toast {
+  position: fixed;
+  bottom: 24px;
+  left: 50%;
+  transform: translateX(-50%) translateY(80px);
+  background: var(--text);
+  color: #fff;
+  padding: 12px 22px;
+  border-radius: 10px;
+  font-size: 14px;
+  font-weight: 600;
+  box-shadow: 0 8px 24px rgba(0,0,0,.2);
+  z-index: 200;
+  transition: transform .3s cubic-bezier(.34,1.56,.64,1);
+  white-space: nowrap;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+.toast.show { transform: translateX(-50%) translateY(0); }
+.toast.success { background: var(--green); }
+.toast.error   { background: var(--full); }
+
+/* ── CONFIG BANNER ────────────────────────────────────────── */
+.config-banner {
+  background: #fef3c7;
+  border: 2px dashed #f59e0b;
+  border-radius: 10px;
+  padding: 14px 16px;
+  margin-bottom: 20px;
+  font-size: 12px;
+  color: #92400e;
+  line-height: 1.6;
+}
+.config-banner strong { font-weight: 700; display: block; margin-bottom: 4px; font-size: 13px; }
+.config-banner code {
+  background: rgba(0,0,0,.08);
+  padding: 1px 5px;
+  border-radius: 3px;
+  font-family: monospace;
+  font-size: 11px;
+}
+
+/* ── FOOTER ───────────────────────────────────────────────── */
+.footer {
+  text-align: center;
+  padding: 16px;
+  font-size: 11px;
+  color: var(--muted);
+  border-top: 1px solid var(--border);
+}
+
+@keyframes spin { to { transform: rotate(360deg); } }
+@keyframes fadeIn { from { opacity:0; transform:translateY(8px); } to { opacity:1; transform:translateY(0); } }
+.dienst-card { animation: fadeIn .3s ease both; }
+</style>
+</head>
+<body>
+
+<!-- ══ HEADER ══════════════════════════════════════════════ -->
+<header class="header">
+  <div class="header-logo">TSG Dittershausen · HFV Fuldabrück</div>
+  <h1>Mitternachts<span>turnier</span> 2026</h1>
+  <div class="header-sub">Turnierwochenende 20.–21. Juni 2026 · Klicke auf einen freien Dienst zum Anmelden</div>
+  <div class="stats-bar">
+    <div class="stat">
+      <div class="stat-num" id="stat-total">–</div>
+      <div class="stat-label">Plätze gesamt</div>
+    </div>
+    <div class="stat">
+      <div class="stat-num green" id="stat-free">–</div>
+      <div class="stat-label">Noch frei</div>
+    </div>
+    <div class="stat">
+      <div class="stat-num red" id="stat-taken">–</div>
+      <div class="stat-label">Belegt</div>
+    </div>
+  </div>
+</header>
+
+<!-- ══ LEGENDE ═════════════════════════════════════════════ -->
+<div class="legend">
+  <div class="legend-item"><div class="legend-dot dot-free"></div> Frei – klicken zum Anmelden</div>
+  <div class="legend-item"><div class="legend-dot dot-warn"></div> Fast voll</div>
+  <div class="legend-item"><div class="legend-dot dot-full"></div> Voll belegt</div>
+  <div class="legend-item"><div class="legend-dot dot-mine"></div> Deine Anmeldung</div>
+</div>
+
+<!-- ══ MAIN ════════════════════════════════════════════════ -->
+<main class="main">
+
+  <!-- Konfigurations-Hinweis (wird nach Setup ausgeblendet) -->
+  <div class="config-banner" id="config-banner">
+    <strong>⚙️ Einrichtung erforderlich</strong>
+    Ersetze in Zeile 1 des JavaScript-Teils den Platzhalter <code>https://script.google.com/macros/s/AKfycbwI4sdO8h1QIr7HATIFwmcMYOWvgZWSd3wzQ7L9D4i5QI0weO7zEjOFOszXZwOOgwqbYg/exec</code>
+    durch die URL deines Google Apps Script Web-Apps. Anleitung liegt der ZIP-Datei bei.
+  </div>
+
+  <div id="dashboard"></div>
+
+</main>
+
+<!-- ══ ANMELDE-MODAL ════════════════════════════════════════ -->
+<div class="overlay" id="overlay">
+  <div class="modal" role="dialog" aria-modal="true" aria-labelledby="modal-title">
+    <div class="modal-header">
+      <div class="modal-tag" id="modal-tag"></div>
+      <div class="modal-title" id="modal-title"></div>
+      <div class="modal-zeit" id="modal-zeit"></div>
+    </div>
+    <div class="modal-body">
+      <div class="form-group">
+        <label class="form-label" for="input-name">Vor- und Nachname *</label>
+        <input class="form-input" id="input-name" type="text" placeholder="Max Mustermann" autocomplete="name">
+      </div>
+      <div class="form-group">
+        <label class="form-label" for="input-email">E-Mail-Adresse *</label>
+        <input class="form-input" id="input-email" type="email" placeholder="max@beispiel.de" autocomplete="email">
+      </div>
+      <div class="form-group">
+        <label class="form-label" for="input-tel">Telefonnummer *</label>
+        <input class="form-input" id="input-tel" type="tel" placeholder="0170 1234567" autocomplete="tel">
+      </div>
+    </div>
+    <div class="modal-footer">
+      <button class="btn-cancel" id="btn-cancel">Abbrechen</button>
+      <button class="btn-submit" id="btn-submit">
+        <span class="btn-text">Jetzt anmelden ✓</span>
+        <span class="spinner"></span>
+      </button>
+    </div>
+  </div>
+</div>
+
+<!-- ══ TOAST ════════════════════════════════════════════════ -->
+<div class="toast" id="toast"></div>
+
+<footer class="footer">
+  Mitternachtsturnier 2026 · TSG Dittershausen · Vielen Dank für deine Unterstützung! ⚽
+</footer>
+
+<script>
+// ══════════════════════════════════════════════════════════════
+// KONFIGURATION – NUR DIESE ZEILE ANPASSEN:
+const SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbwI4sdO8h1QIr7HATIFwmcMYOWvgZWSd3wzQ7L9D4i5QI0weO7zEjOFOszXZwOOgwqbYg/exec';
+// ══════════════════════════════════════════════════════════════
+
+// Dienst-Definitionen
+const DIENSTE = [
+  // DONNERSTAG
+  { id:'do1', tag:'do', tagName:'Donnerstag, 18.06.2026', zeit:'ab 17:00 Uhr', aufgabe:'Spielfeldaufbau', detail:'Tore aufstellen · Spielfelder abkreiden', kategorie:'A-/B-Jugend', max:3 },
+  { id:'do2', tag:'do', tagName:'Donnerstag, 18.06.2026', zeit:'ab 17:00 Uhr', aufgabe:'Betreuer / Aufsicht', detail:'Betreuung beim Aufbau', kategorie:'Betreuer', max:1 },
+  // FREITAG
+  { id:'fr1', tag:'fr', tagName:'Freitag, 19.06.2026', zeit:'ab 18:00 Uhr', aufgabe:'Aufbau & Vorbereitung', detail:'Tische aufbauen · Gelände vorbereiten · Gläser spülen', kategorie:'A-/B-Jugend', max:4 },
+  // SAMSTAG
+  { id:'sa1', tag:'sa', tagName:'Samstag, 20.06.2026', zeit:'10:00 – 13:00 Uhr', aufgabe:'Aufbau Turniertag & Bierpils', detail:'Aufbau + Bierpils / Bedienung', kategorie:'Eltern oder A-Jugend', max:2 },
+  { id:'sa2', tag:'sa', tagName:'Samstag, 20.06.2026', zeit:'13:00 – 16:00 Uhr', aufgabe:'Bratwurst- & Pommesstand', detail:'Bedienung am Stand', kategorie:'Eltern oder Jugend', max:2 },
+  { id:'sa3', tag:'sa', tagName:'Samstag, 20.06.2026', zeit:'16:00 – 19:00 Uhr', aufgabe:'Bratwurst- & Pommesstand', detail:'Bedienung am Stand', kategorie:'Eltern oder Jugend', max:1 },
+  { id:'sa4', tag:'sa', tagName:'Samstag, 20.06.2026', zeit:'19:00 – 22:00 Uhr', aufgabe:'Bratwurst- & Pommesstand', detail:'Bedienung am Stand', kategorie:'Eltern oder Jugend', max:1 },
+  { id:'sa5', tag:'sa', tagName:'Samstag, 20.06.2026', zeit:'22:00 Uhr – Ende', aufgabe:'Bratwurst- & Pommesstand', detail:'Letzter Dienst – Stand sauber hinterlassen!', kategorie:'Eltern oder Jugend', max:1 },
+  // SONNTAG
+  { id:'so1', tag:'so', tagName:'Sonntag, 21.06.2026', zeit:'08:30 – 11:30 Uhr', aufgabe:'Aufbau & Bierpils', detail:'Aufbau Turniertag + Bierpils / Bedienung', kategorie:'Eltern oder A-Jugend', max:2 },
+  { id:'so2', tag:'so', tagName:'Sonntag, 21.06.2026', zeit:'08:30 – 11:30 Uhr', aufgabe:'Aufräumen & Glasscherben', detail:'Sportplatz aufräumen · Glasscherben sammeln · Bratwurst-/Pommesstand', kategorie:'A-/B-Jugend', max:2 },
+  { id:'so3', tag:'so', tagName:'Sonntag, 21.06.2026', zeit:'11:30 – 14:00 Uhr', aufgabe:'Bratwurst- & Pommesstand', detail:'Bedienung am Stand', kategorie:'Eltern oder Jugend', max:1 },
+  { id:'so4', tag:'so', tagName:'Sonntag, 21.06.2026', zeit:'14:00 – 17:00 Uhr', aufgabe:'Bratwurst- & Pommesstand', detail:'Bedienung am Stand', kategorie:'Eltern oder Jugend', max:1 },
+  { id:'so5', tag:'so', tagName:'Sonntag, 21.06.2026', zeit:'14:00 – 17:00 Uhr', aufgabe:'Bierpils / Bedienung', detail:'Bierpils Bedienung', kategorie:'Eltern oder A-Jugend', max:2 },
+  { id:'so6', tag:'so', tagName:'Sonntag, 21.06.2026', zeit:'17:00 Uhr – Ende', aufgabe:'Bratwurst- & Pommesstand', detail:'Letzter Dienst – Stand sauber hinterlassen!', kategorie:'Eltern oder Jugend', max:1 },
+  { id:'so7', tag:'so', tagName:'Sonntag, 21.06.2026', zeit:'ab 19:00 Uhr', aufgabe:'Abbau Bänke & Tische', detail:'Abbau des Turniermaterials', kategorie:'A-/B-Jugend', max:2 },
+];
+
+const TAGE = [
+  { id:'do', name:'Donnerstag', datum:'18.06.2026', badge:'badge-do' },
+  { id:'fr', name:'Freitag',    datum:'19.06.2026', badge:'badge-fr' },
+  { id:'sa', name:'Samstag',    datum:'20.06.2026', badge:'badge-sa' },
+  { id:'so', name:'Sonntag',    datum:'21.06.2026', badge:'badge-so' },
+];
+
+// ── State ─────────────────────────────────────────────────
+let state = {}; // { dienstId: [{ name, email, tel }] }
+let myBookings = JSON.parse(localStorage.getItem('mt26_bookings') || '[]');
+let currentDienst = null;
+
+// Initialisierung
+DIENSTE.forEach(d => { state[d.id] = []; });
+
+// ── API Calls ─────────────────────────────────────────────
+const isConfigured = () => SCRIPT_URL !== 'https://script.google.com/macros/s/AKfycbwI4sdO8h1QIr7HATIFwmcMYOWvgZWSd3wzQ7L9D4i5QI0weO7zEjOFOszXZwOOgwqbYg/exec';
+
+async function loadData() {
+  if (!isConfigured()) { renderDashboard(); updateStats(); return; }
+  try {
+    const res = await fetch(SCRIPT_URL + '?action=getAll', { mode:'cors' });
+    const data = await res.json();
+    state = data;
+    renderDashboard();
+    updateStats();
+  } catch(e) {
+    console.warn('Offline-Modus:', e);
+    renderDashboard();
+    updateStats();
+  }
+}
+
+async function submitAnmeldung(dienstId, name, email, tel) {
+  if (!isConfigured()) {
+    // Demo-Modus: lokal speichern
+    if (!state[dienstId]) state[dienstId] = [];
+    state[dienstId].push({ name, email, tel });
+    myBookings.push(dienstId);
+    localStorage.setItem('mt26_bookings', JSON.stringify(myBookings));
+    return { success: true };
+  }
+  const res = await fetch(SCRIPT_URL, {
+    method: 'POST',
+    mode: 'cors',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({ action:'anmelden', dienstId, name, email, tel })
+  });
+  const data = await res.json();
+  if (data.success) {
+    state[dienstId] = data.slots;
+    myBookings.push(dienstId);
+    localStorage.setItem('mt26_bookings', JSON.stringify(myBookings));
+  }
+  return data;
+}
+
+// ── Render ────────────────────────────────────────────────
+function getCardState(dienst) {
+  const slots = state[dienst.id] || [];
+  const belegt = slots.length;
+  const isMine = myBookings.includes(dienst.id);
+  if (isMine) return 'mine';
+  if (belegt >= dienst.max) return 'full';
+  if (belegt > 0) return 'warn';
+  return 'free';
+}
+
+function renderDashboard() {
+  const dash = document.getElementById('dashboard');
+  const banner = document.getElementById('config-banner');
+  if (isConfigured()) banner.style.display = 'none';
+
+  let html = '';
+  TAGE.forEach(tag => {
+    const diensteFuerTag = DIENSTE.filter(d => d.tag === tag.id);
+    html += `
+      <section class="day-section">
+        <div class="day-header">
+          <span class="day-badge ${tag.badge}">${tag.name}</span>
+          <span class="day-title">${tag.datum}</span>
+          <div class="day-line"></div>
+        </div>
+        <div class="dienst-grid">
+          ${diensteFuerTag.map((d, i) => renderCard(d, i * 0.05)).join('')}
+        </div>
+      </section>`;
+  });
+  dash.innerHTML = html;
+
+  // Click-Handler
+  dash.querySelectorAll('.dienst-card:not(.full)').forEach(card => {
+    card.addEventListener('click', () => openModal(card.dataset.id));
+  });
+}
+
+function renderCard(dienst, delay) {
+  const slots  = state[dienst.id] || [];
+  const belegt = slots.length;
+  const frei   = dienst.max - belegt;
+  const cs     = getCardState(dienst);
+  const pillMap = { free:'pill-free', warn:'pill-warn', full:'pill-full', mine:'pill-mine' };
+  const pillTxt = { free:'Frei', warn:'Fast voll', full:'Voll', mine:'Angemeldet' };
+
+  let slotsHtml = '';
+  for (let i = 0; i < dienst.max; i++) {
+    if (i < slots.length) {
+      const isMine = myBookings.includes(dienst.id) && slots[i] && myBookings.includes(dienst.id);
+      const cls = cs === 'mine' && i === slots.findIndex((_,j) => myBookings.includes(dienst.id)) ? 'slot-mine' : 'slot-taken';
+      slotsHtml += `<div class="slot ${cls}" title="${slots[i]?.name||''}">${slots[i]?.name ? slots[i].name.split(' ')[0] : '✓'}</div>`;
+    } else {
+      slotsHtml += `<div class="slot slot-free">+ Frei</div>`;
+    }
+  }
+
+  return `
+    <div class="dienst-card ${cs}" data-id="${dienst.id}" style="animation-delay:${delay}s" role="button" tabindex="0" aria-label="${dienst.aufgabe} ${dienst.zeit}">
+      <div class="card-top">
+        <div class="card-zeit">${dienst.zeit}</div>
+        <div class="card-status-pill ${pillMap[cs]}">${pillTxt[cs]}</div>
+      </div>
+      <div class="card-aufgabe">${dienst.aufgabe}</div>
+      <div class="card-kategorie">${dienst.kategorie} · ${belegt}/${dienst.max} belegt</div>
+      <div class="card-slots">${slotsHtml}</div>
+      ${dienst.detail ? `<div class="card-hint">${dienst.detail}</div>` : ''}
+    </div>`;
+}
+
+function updateStats() {
+  let total = 0, taken = 0;
+  DIENSTE.forEach(d => {
+    total += d.max;
+    taken += Math.min((state[d.id]||[]).length, d.max);
+  });
+  document.getElementById('stat-total').textContent = total;
+  document.getElementById('stat-free').textContent  = total - taken;
+  document.getElementById('stat-taken').textContent = taken;
+}
+
+// ── Modal ─────────────────────────────────────────────────
+function openModal(dienstId) {
+  const d = DIENSTE.find(x => x.id === dienstId);
+  if (!d) return;
+  if (getCardState(d) === 'full') return;
+  if (myBookings.includes(dienstId)) { showToast('Du bist für diesen Dienst bereits angemeldet!', 'error'); return; }
+
+  currentDienst = d;
+  document.getElementById('modal-tag').textContent  = d.tagName;
+  document.getElementById('modal-title').textContent = d.aufgabe;
+  document.getElementById('modal-zeit').textContent  = d.zeit + ' · ' + d.kategorie;
+  document.getElementById('input-name').value  = '';
+  document.getElementById('input-email').value = '';
+  document.getElementById('input-tel').value   = '';
+  document.getElementById('overlay').classList.add('open');
+  setTimeout(() => document.getElementById('input-name').focus(), 250);
+}
+
+function closeModal() {
+  document.getElementById('overlay').classList.remove('open');
+  currentDienst = null;
+}
+
+document.getElementById('btn-cancel').addEventListener('click', closeModal);
+document.getElementById('overlay').addEventListener('click', e => { if (e.target === e.currentTarget) closeModal(); });
+document.addEventListener('keydown', e => { if (e.key === 'Escape') closeModal(); });
+
+document.getElementById('btn-submit').addEventListener('click', async () => {
+  const name  = document.getElementById('input-name').value.trim();
+  const email = document.getElementById('input-email').value.trim();
+  const tel   = document.getElementById('input-tel').value.trim();
+
+  if (!name || !email || !tel) { showToast('Bitte alle Felder ausfüllen.', 'error'); return; }
+  if (!email.includes('@')) { showToast('Bitte eine gültige E-Mail eingeben.', 'error'); return; }
+
+  const btn = document.getElementById('btn-submit');
+  btn.classList.add('loading');
+  btn.disabled = true;
+
+  try {
+    const result = await submitAnmeldung(currentDienst.id, name, email, tel);
+    if (result.success) {
+      closeModal();
+      renderDashboard();
+      updateStats();
+      showToast('🎉 Anmeldung erfolgreich! Danke ' + name.split(' ')[0] + '!', 'success');
+      // Re-attach listeners
+      document.querySelectorAll('.dienst-card:not(.full)').forEach(card => {
+        card.addEventListener('click', () => openModal(card.dataset.id));
+      });
+    } else {
+      showToast(result.message || 'Fehler bei der Anmeldung.', 'error');
+    }
+  } catch(e) {
+    showToast('Verbindungsfehler – bitte nochmal versuchen.', 'error');
+  }
+
+  btn.classList.remove('loading');
+  btn.disabled = false;
+});
+
+// ── Toast ─────────────────────────────────────────────────
+function showToast(msg, type='success') {
+  const t = document.getElementById('toast');
+  t.textContent = msg;
+  t.className = `toast ${type} show`;
+  setTimeout(() => t.classList.remove('show'), 4000);
+}
+
+// ── Start ─────────────────────────────────────────────────
+loadData();
+if (isConfigured()) setInterval(loadData, 30000); // alle 30s aktualisieren
+</script>
+</body>
+</html>
