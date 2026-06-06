@@ -567,7 +567,7 @@ body {
 <script>
 // ══════════════════════════════════════════════════════════════
 // KONFIGURATION – NUR DIESE ZEILE ANPASSEN:
-const SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbwI4sdO8h1QIr7HATIFwmcMYOWvgZWSd3wzQ7L9D4i5QI0weO7zEjOFOszXZwOOgwqbYg/exec';
+const SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbym58PVriqHl6tVf1kuJToTpxdIvW-bX7G4Wfippc1mQLMXEd2CTwzrDCEkJrqWQvr11A/exec';
 // ══════════════════════════════════════════════════════════════
 
 // Dienst-Definitionen
@@ -609,15 +609,12 @@ let currentDienst = null;
 DIENSTE.forEach(d => { state[d.id] = []; });
 
 // ── API Calls ─────────────────────────────────────────────
-const isConfigured = () => SCRIPT_URL !== 'https://script.google.com/macros/s/AKfycbwI4sdO8h1QIr7HATIFwmcMYOWvgZWSd3wzQ7L9D4i5QI0weO7zEjOFOszXZwOOgwqbYg/exec';
+const isConfigured = () => SCRIPT_URL !== 'https://script.google.com/macros/s/AKfycbym58PVriqHl6tVf1kuJToTpxdIvW-bX7G4Wfippc1mQLMXEd2CTwzrDCEkJrqWQvr11A/exec';
 
 async function loadData() {
   if (!isConfigured()) { renderDashboard(); updateStats(); return; }
   try {
-    const res = await fetch(SCRIPT_URL + '?action=getAll', {
-      method: 'GET',
-      redirect: 'follow'
-    });
+    const res = await fetch(SCRIPT_URL + '?action=getAll', { redirect: 'follow' });
     const data = await res.json();
     state = data;
   } catch(e) {
@@ -635,7 +632,6 @@ async function submitAnmeldung(dienstId, name, email, tel) {
     localStorage.setItem('mt26_bookings', JSON.stringify(myBookings));
     return { success: true };
   }
-  // GET-Request mit URL-Parametern (umgeht CORS-Probleme)
   const params = new URLSearchParams({
     action:   'anmelden',
     dienstId: dienstId,
@@ -643,10 +639,7 @@ async function submitAnmeldung(dienstId, name, email, tel) {
     email:    email,
     tel:      tel
   });
-  const res = await fetch(SCRIPT_URL + '?' + params.toString(), {
-    method:   'GET',
-    redirect: 'follow'
-  });
+  const res = await fetch(SCRIPT_URL + '?' + params.toString(), { redirect: 'follow' });
   const data = await res.json();
   if (data.success) {
     state[dienstId] = data.slots;
