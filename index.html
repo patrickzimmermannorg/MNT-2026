@@ -454,7 +454,7 @@ body {
 .toast.error   { background: var(--full); }
 
 /* ── CONFIG BANNER ────────────────────────────────────────── */
-.config-banner {
+.config-banner { display: none !important;
   background: #fef3c7;
   border: 2px dashed #f59e0b;
   border-radius: 10px;
@@ -520,14 +520,6 @@ body {
 
 <!-- ══ MAIN ════════════════════════════════════════════════ -->
 <main class="main">
-
-  <!-- Konfigurations-Hinweis (wird nach Setup ausgeblendet) -->
-  <div class="config-banner" id="config-banner">
-    <strong>⚙️ Einrichtung erforderlich</strong>
-    Ersetze in Zeile 1 des JavaScript-Teils den Platzhalter <code>https://script.google.com/macros/s/AKfycbwI4sdO8h1QIr7HATIFwmcMYOWvgZWSd3wzQ7L9D4i5QI0weO7zEjOFOszXZwOOgwqbYg/exec</code>
-    durch die URL deines Google Apps Script Web-Apps. Anleitung liegt der ZIP-Datei bei.
-  </div>
-
   <div id="dashboard"></div>
 
 </main>
@@ -671,7 +663,7 @@ function getCardState(dienst) {
 function renderDashboard() {
   const dash = document.getElementById('dashboard');
   const banner = document.getElementById('config-banner');
-  if (isConfigured()) banner.style.display = 'none';
+  
 
   let html = '';
   TAGE.forEach(tag => {
